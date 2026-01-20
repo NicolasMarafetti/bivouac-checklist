@@ -93,19 +93,19 @@ export default function ChecklistPage() {
               </h2>
 
               {category.items && (
-                <div className="space-y-2">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                   {category.items.map((item, itemIndex) => (
                     <label
                       key={itemIndex}
-                      className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer"
+                      className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer"
                     >
                       <input
                         type="checkbox"
                         checked={checkedItems[item] || false}
                         onChange={(e) => handleCheckboxChange(item, e.target.checked)}
-                        className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                        className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 flex-shrink-0"
                       />
-                      <span className="text-gray-700">{item}</span>
+                      <span className="text-gray-700 text-sm leading-tight">{item}</span>
                     </label>
                   ))}
                 </div>
@@ -118,19 +118,19 @@ export default function ChecklistPage() {
                       <h3 className="text-xl font-semibold text-gray-700 mb-3">
                         {subcategory.name}
                       </h3>
-                      <div className="space-y-2">
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                         {subcategory.items.map((item, itemIndex) => (
                           <label
                             key={itemIndex}
-                            className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer"
+                            className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer"
                           >
                             <input
                               type="checkbox"
                               checked={checkedItems[item] || false}
                               onChange={(e) => handleCheckboxChange(item, e.target.checked)}
-                              className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                              className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 flex-shrink-0"
                             />
-                            <span className="text-gray-700">{item}</span>
+                            <span className="text-gray-700 text-sm leading-tight">{item}</span>
                           </label>
                         ))}
                       </div>
