@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bivouac Checklist
 
-## Getting Started
+Une Progressive Web App (PWA) pour gérer votre checklist de bivouac. Accessible sur mobile et installable sur votre écran d'accueil iPhone.
 
-First, run the development server:
+## Technologies
 
+- **Next.js 16** avec React 19
+- **Prisma 6.19** avec MongoDB Atlas
+- **Tailwind CSS 4**
+- **PWA** avec next-pwa
+
+## Développement local
+
+1. Installer les dépendances:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Générer le client Prisma:
+```bash
+npx prisma generate
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Configurer les variables d'environnement:
+Créer un fichier `.env` avec:
+```
+DATABASE_URL="mongodb+srv://username:password@cluster.mongodb.net/database-name"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Lancer le serveur de développement:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Ouvrir [http://localhost:3000](http://localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+## Déploiement sur Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Créer un repo GitHub
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Le repo Git est déjà initialisé
+# Créer un nouveau repo sur GitHub et l'ajouter comme remote:
+git remote add origin https://github.com/votre-username/bivouac-checklist.git
+git branch -M main
+git push -u origin main
+```
 
-## Deploy on Vercel
+### 2. Importer sur Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Aller sur [vercel.com](https://vercel.com)
+2. Cliquer sur "Add New Project"
+3. Importer votre repo GitHub
+4. Configurer les variables d'environnement:
+   - `DATABASE_URL`: Votre URL de connexion MongoDB Atlas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Variables d'environnement requises
+
+Dans les paramètres Vercel, ajouter:
+
+```
+DATABASE_URL=mongodb+srv://username:password@cluster.mongodb.net/bivouac-checklist
+```
+
+### 4. Déployer
+
+Vercel déploiera automatiquement à chaque push sur la branche `main`.
+
+## Installation comme PWA sur iPhone
+
+1. Ouvrir le site sur Safari
+2. Cliquer sur le bouton "Partager" (icône de partage)
+3. Sélectionner "Sur l'écran d'accueil"
+4. Nommer l'app "Bivouac" et ajouter
+5. L'icône apparaîtra sur votre écran d'accueil
+
+## Personnalisation des icônes
+
+Pour changer les icônes PWA, remplacer les fichiers dans `public/icons/` avec vos propres images, ou modifier le script `scripts/generate-icons.js` et relancer:
+
+```bash
+npm run generate-icons
+```
+
+## Structure du projet
+
+```
+app/
+├── api/checklist/[user]/  # API routes
+├── checklist/[user]/      # Page de checklist
+├── layout.tsx             # Layout avec métadonnées PWA
+└── page.tsx               # Page d'accueil
+
+lib/
+├── prisma.ts              # Client Prisma
+└── checklist-data.ts      # Données de checklist
+
+prisma/
+└── schema.prisma          # Schéma de base de données
+
+public/
+├── icons/                 # Icônes PWA
+└── manifest.json          # Manifest PWA
+```
